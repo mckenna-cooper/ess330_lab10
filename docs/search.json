@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Lab 10",
     "section": "",
-    "text": "# spatial data science\nlibrary(tidyverse)\n\nWarning: package 'tidyverse' was built under R version 4.4.3\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(sf)\n\nLinking to GEOS 3.13.0, GDAL 3.10.1, PROJ 9.5.1; sf_use_s2() is TRUE\n\nlibrary(units)\n\nudunits database from C:/Users/mcoop/AppData/Local/R/win-library/4.4/units/share/udunits/udunits2.xml\n\n# Data\nlibrary(AOI)\n\n# Visualization\nlibrary(gghighlight)\n\nWarning: package 'gghighlight' was built under R version 4.4.3\n\nlibrary(ggrepel)\n\nWarning: package 'ggrepel' was built under R version 4.4.3\n\nlibrary(knitr)"
+    "text": "# spatial data science\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(sf)\n\nLinking to GEOS 3.13.1, GDAL 3.10.2, PROJ 9.5.1; sf_use_s2() is TRUE\n\nlibrary(units)\n\nudunits database from C:/Users/mcoop/AppData/Local/R/win-library/4.5/units/share/udunits/udunits2.xml\n\nlibrary(gghighlight)\nlibrary(ggrepel)\nlibrary(knitr)"
   },
   {
     "objectID": "index.html#libraries",
     "href": "index.html#libraries",
     "title": "Lab 10",
     "section": "",
-    "text": "# spatial data science\nlibrary(tidyverse)\n\nWarning: package 'tidyverse' was built under R version 4.4.3\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(sf)\n\nLinking to GEOS 3.13.0, GDAL 3.10.1, PROJ 9.5.1; sf_use_s2() is TRUE\n\nlibrary(units)\n\nudunits database from C:/Users/mcoop/AppData/Local/R/win-library/4.4/units/share/udunits/udunits2.xml\n\n# Data\nlibrary(AOI)\n\n# Visualization\nlibrary(gghighlight)\n\nWarning: package 'gghighlight' was built under R version 4.4.3\n\nlibrary(ggrepel)\n\nWarning: package 'ggrepel' was built under R version 4.4.3\n\nlibrary(knitr)"
+    "text": "# spatial data science\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(sf)\n\nLinking to GEOS 3.13.1, GDAL 3.10.2, PROJ 9.5.1; sf_use_s2() is TRUE\n\nlibrary(units)\n\nudunits database from C:/Users/mcoop/AppData/Local/R/win-library/4.5/units/share/udunits/udunits2.xml\n\nlibrary(gghighlight)\nlibrary(ggrepel)\nlibrary(knitr)"
   },
   {
     "objectID": "index.html#define-a-projection",
@@ -25,7 +25,7 @@
     "href": "index.html#get-usa-boundaries",
     "title": "Lab 10",
     "section": "1.2 Get USA Boundaries",
-    "text": "1.2 Get USA Boundaries\n\nremotes::install_github(\"mikejohnson51/AOI\")\n\nUsing GitHub PAT from the git credential store.\n\n\nSkipping install of 'AOI' from a github remote, the SHA1 (f821d499) has not changed since last install.\n  Use `force = TRUE` to force installation\n\nconus_states &lt;- aoi_get(state = 'conus')\nconus_states_eqdc &lt;- st_transform(conus_states, crs = eqdc)"
+    "text": "1.2 Get USA Boundaries\n\nremotes::install_github(\"mikejohnson51/AOI\")\n\nUsing GitHub PAT from the git credential store.\n\n\nSkipping install of 'AOI' from a github remote, the SHA1 (f821d499) has not changed since last install.\n  Use `force = TRUE` to force installation\n\nlibrary(AOI)\nconus_states &lt;- aoi_get(state = 'conus')\nconus_states_eqdc &lt;- st_transform(conus_states, crs = eqdc)"
   },
   {
     "objectID": "index.html#get-country-boundaries-for-mexico-the-united-states-of-america-and-canada",
@@ -46,7 +46,7 @@
     "href": "index.html#distance-to-usa-border-coastline-or-national-km",
     "title": "Lab 10",
     "section": "2.1 Distance to USA Border (coastline or national) (km)",
-    "text": "2.1 Distance to USA Border (coastline or national) (km)\n\nlibrary(flextable)\n\nWarning: package 'flextable' was built under R version 4.4.3\n\n\n\nAttaching package: 'flextable'\n\n\nThe following object is masked from 'package:purrr':\n\n    compose\n\nusa_outline &lt;- st_union(conus_states_eqdc)\n\nusa_border &lt;- st_cast(usa_outline, \"MULTILINESTRING\")\n\ncities_conus$dist_to_us_border_km &lt;- as.numeric(st_distance(cities_conus, usa_border)) / 1000\n\ntop5_cities &lt;- cities_conus %&gt;%\n  arrange(desc(dist_to_us_border_km)) %&gt;%\n  slice(1:5) %&gt;%\n  select(city, state_name.x, dist_to_us_border_km) %&gt;%\n  st_drop_geometry()\n\ntop5_cities_flex &lt;- flextable(top5_cities) %&gt;%\n  \n  set_header_labels(\n    city = \"City\",\n    state_name.x = \"State\",\n    dist_to_us_border_km = \"Distance to Border (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from USA Border\", colwidths = 3)\n\ntop5_cities_flex\n\nTop 5 Farthest Cities from USA BorderCityStateDistance to Border (km)MinneapolisKansas1,084.275AdaKansas1,084.112BarnardKansas1,083.737ManchesterKansas1,080.210TalmageKansas1,080.049"
+    "text": "2.1 Distance to USA Border (coastline or national) (km)\n\nlibrary(flextable)\n\n\nAttaching package: 'flextable'\n\n\nThe following object is masked from 'package:purrr':\n\n    compose\n\nusa_outline &lt;- st_union(conus_states_eqdc)\n\nusa_border &lt;- st_cast(usa_outline, \"MULTILINESTRING\")\n\ncities_conus$dist_to_us_border_km &lt;- as.numeric(st_distance(cities_conus, usa_border)) / 1000\n\ntop5_cities &lt;- cities_conus %&gt;%\n  arrange(desc(dist_to_us_border_km)) %&gt;%\n  slice(1:5) %&gt;%\n  select(city, state_name.x, dist_to_us_border_km) %&gt;%\n  st_drop_geometry()\n\ntop5_cities_flex &lt;- flextable(top5_cities) %&gt;%\n  \n  set_header_labels(\n    city = \"City\",\n    state_name.x = \"State\",\n    dist_to_us_border_km = \"Distance to Border (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from USA Border\", colwidths = 3)\n\ntop5_cities_flex\n\nTop 5 Farthest Cities from USA BorderCityStateDistance to Border (km)MinneapolisKansas1,084.275AdaKansas1,084.112BarnardKansas1,083.737ManchesterKansas1,080.210TalmageKansas1,080.049"
   },
   {
     "objectID": "index.html#distance-to-states-km",
@@ -60,55 +60,34 @@
     "href": "index.html#distance-to-mexico-km",
     "title": "Lab 10",
     "section": "2.3 Distance to Mexico (km)",
-    "text": "2.3 Distance to Mexico (km)\n\nmexico &lt;- countries_proj %&gt;%\n  filter(sovereignt == \"Mexico\")\n\nmexico_proj &lt;- st_transform(mexico, st_crs(cities_proj))\n\ncities_proj$dist_to_mexico_km &lt;- st_distance(cities_proj, mexico_proj) / 1000\n\ntop5_cities_mexico &lt;- cities_proj %&gt;%\n  select(-city_ascii, -state_id, -county_fips, -county_name, -population, \n         -density, -source, -military, -incorporated, -timezone, -ranking, \n         -zips, -id, -dist_to_state_km) %&gt;%\n  arrange(desc(dist_to_mexico_km)) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry()\n\ntop5_cities_mexico_flex &lt;- flextable(top5_cities_mexico) %&gt;%\n  set_header_labels(\n    city = \"City\",\n    state_name = \"State\",\n    dist_to_mexico_km = \"Distance to Mexico (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from Mexico\", colwidths = 3)\n\n\ntop5_cities_mexico_flex\n\nTop 5 Farthest Cities from MexicoCityStateDistance to Mexico (km)Attu StationAlaska5,640.179 [m]Eareckson StationAlaska5,576.325 [m]Point HopeAlaska5,061.411 [m]GambellAlaska5,026.623 [m]Point LayAlaska5,016.127 [m]\n\n\nNote: I believe that the distance is in the correct units. I’m not sure why there is an [m] next to the distance values.  ## 2.4 Distance to Canada (km)\n\n# 1. Isolate Canada from the country objects\ncanada_proj &lt;- countries_proj %&gt;%\n  filter(sovereignt == \"Canada\")\n\n# 2. Calculate the distance from each city to the Canadian border (in kilometers)\ncities_proj$dist_to_canada_km &lt;- as.numeric(st_distance(cities_proj, canada_proj)) / 1000\n\n# 3. Create a table for the five cities farthest from the Canadian border\ntop5_cities_canada &lt;- cities_proj %&gt;%\n  select(-city_ascii, -state_id, -county_fips, -county_name, -population, \n         -density, -source, -military, -incorporated, -timezone, -ranking, \n         -zips, -id, -dist_to_state_km, -dist_to_mexico_km) %&gt;%\n  arrange(desc(dist_to_canada_km)) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry()  # Remove the geometry column for display in the table\n\n# 4. Create the flextable with only the desired columns\ntop5_cities_canada_flex &lt;- flextable(top5_cities_canada) %&gt;%\n  set_header_labels(\n    name = \"City\",\n    state_name = \"State\",\n    dist_to_canada_km = \"Distance to Canada (km)\"\n  )\n\n# Display the flextable\ntop5_cities_canada_flex\n\ncityStateDistance to Canada (km)Hawaiian Ocean ViewHawaii4,151.650Discovery HarbourHawaii4,149.978WaiohinuHawaii4,146.501NaalehuHawaii4,144.805PahalaHawaii4,127.362"
+    "text": "2.3 Distance to Mexico (km)\n\nmexico &lt;- countries_proj %&gt;%\n  filter(sovereignt == \"Mexico\")\n\nmexico_proj &lt;- st_transform(mexico, st_crs(cities_proj))\n\ncities_proj$dist_to_mexico_km &lt;- st_distance(cities_proj, mexico_proj) / 1000\n\ntop5_cities_mexico &lt;- cities_proj %&gt;%\n  select(-city_ascii, -state_id, -county_fips, -county_name, -population, \n         -density, -source, -military, -incorporated, -timezone, -ranking, \n         -zips, -id, -dist_to_state_km) %&gt;%\n  arrange(desc(dist_to_mexico_km)) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry()\n\ntop5_cities_mexico_flex &lt;- flextable(top5_cities_mexico) %&gt;%\n  set_header_labels(\n    city = \"City\",\n    state_name = \"State\",\n    dist_to_mexico_km = \"Distance to Mexico (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from Mexico\", colwidths = 3)\n\n\ntop5_cities_mexico_flex\n\nTop 5 Farthest Cities from MexicoCityStateDistance to Mexico (km)Attu StationAlaska5,640.179 [m]Eareckson StationAlaska5,576.325 [m]Point HopeAlaska5,061.411 [m]GambellAlaska5,026.623 [m]Point LayAlaska5,016.127 [m]\n\n\nNote: I believe that the distance is in the correct units. I’m not sure why there is an [m] next to the distance values."
+  },
+  {
+    "objectID": "index.html#distance-to-canada-km",
+    "href": "index.html#distance-to-canada-km",
+    "title": "Lab 10",
+    "section": "2.4 Distance to Canada (km)",
+    "text": "2.4 Distance to Canada (km)\n\n# 1. Isolate Canada from the country objects\ncanada_proj &lt;- countries_proj %&gt;%\n  filter(sovereignt == \"Canada\")\n\n# 2. Calculate the distance from each city to the Canadian border (in kilometers)\ncities_proj$dist_to_canada_km &lt;- as.numeric(st_distance(cities_proj, canada_proj)) / 1000\n\n# 3. Create a table for the five cities farthest from the Canadian border\ntop5_cities_canada &lt;- cities_proj %&gt;%\n  select(-city_ascii, -state_id, -county_fips, -county_name, -population, \n         -density, -source, -military, -incorporated, -timezone, -ranking, \n         -zips, -id, -dist_to_state_km, -dist_to_mexico_km) %&gt;%\n  arrange(desc(dist_to_canada_km)) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry()  # Remove the geometry column for display in the table\n\n# 4. Create the flextable with only the desired columns\ntop5_cities_canada_flex &lt;- flextable(top5_cities_canada) %&gt;%\n  set_header_labels(\n    name = \"City\",\n    state_name = \"State\",\n    dist_to_canada_km = \"Distance to Canada (km)\"\n  )\n\n# Display the flextable\ntop5_cities_canada_flex\n\ncityStateDistance to Canada (km)Hawaiian Ocean ViewHawaii4,151.650Discovery HarbourHawaii4,149.978WaiohinuHawaii4,146.501NaalehuHawaii4,144.805PahalaHawaii4,127.362"
   },
   {
     "objectID": "index.html#data",
     "href": "index.html#data",
     "title": "Lab 10",
     "section": "3.1 Data",
-    "text": "3.1 Data"
+    "text": "3.1 Data\n\nlibrary(ggplot2)\nlibrary(ggrepel)\nlibrary(dplyr)\n\n# Filter to 3 continents of interest (e.g., North America, South America, Europe)\ncontinents &lt;- countries_proj %&gt;%\n  filter(continent %in% c(\"North America\", \"South America\", \"Europe\"))\n\n# Get top 10 cities by population\ntop10_cities &lt;- cities_conus %&gt;%\n  arrange(desc(population)) %&gt;%\n  slice_head(n = 10)\n\n# Plot\nggplot() +\n  geom_sf(data = continents, fill = \"gray95\", color = \"gray70\", lty = \"dashed\", size = 0.3) +\n  geom_sf(data = conus_states_eqdc, fill = NA, color = \"black\", size = 0.4) +\n  geom_sf(data = st_union(conus_states_eqdc), fill = NA, color = \"red\", size = 0.6, lty = \"solid\") +\n  geom_sf(data = top10_cities, aes(size = population), color = \"blue\") +\n  ggrepel::geom_label_repel(data = top10_cities,\n                            aes(geometry = geometry, label = city),\n                            stat = \"sf_coordinates\",\n                            size = 3,\n                            min.segment.length = 0) +\n  theme_minimal() +\n  labs(title = \"Top 10 Largest U.S. Cities and Geographic Context\",\n       subtitle = \"Includes 3 Continents, CONUS Outline, and State Boundaries\") +\n  theme(legend.position = \"none\")"
   },
   {
     "objectID": "index.html#city-distance-from-the-border",
     "href": "index.html#city-distance-from-the-border",
     "title": "Lab 10",
     "section": "3.2 City Distance from the Border",
-    "text": "3.2 City Distance from the Border"
+    "text": "3.2 City Distance from the Border\n\n# Reattach geometry to top5_cities\ntop5_cities_sf &lt;- cities_conus %&gt;%\n  semi_join(top5_cities, by = c(\"city\", \"state_name.x\", \"dist_to_us_border_km\"))\n\n\nlibrary(ggplot2)\nlibrary(ggrepel)\n\nggplot() +\n  # State boundaries\n  geom_sf(data = conus_states_eqdc, fill = NA, color = \"gray30\", size = 0.3) +\n  \n  # All cities colored by distance\n  geom_sf(data = cities_conus, aes(color = dist_to_us_border_km), size = 1) +\n  \n  # Highlight top 5 cities\n  geom_sf(data = top5_cities_sf, color = \"red\", size = 2) +\n  \n  # Labels for top 5 cities\n  ggrepel::geom_label_repel(\n    data = top5_cities_sf,\n    aes(label = city, geometry = geometry),\n    stat = \"sf_coordinates\",\n    size = 3,\n    min.segment.length = 0\n  ) +\n  \n  scale_color_viridis_c(option = \"plasma\", name = \"Distance to Border (km)\") +\n  \n  labs(\n    title = \"U.S. Cities Colored by Distance from National Border\",\n    subtitle = \"Top 5 Farthest Cities Highlighted\",\n    caption = \"Data source: cities_conus\"\n  ) +\n  \n  theme_minimal()"
   },
   {
     "objectID": "index.html#city-distance-from-nearest-state",
     "href": "index.html#city-distance-from-nearest-state",
     "title": "Lab 10",
     "section": "3.3 City Distance from Nearest State",
-    "text": "3.3 City Distance from Nearest State"
-  },
-  {
-    "objectID": "index.html#equidistance-boundary-from-mexico-and-canada",
-    "href": "index.html#equidistance-boundary-from-mexico-and-canada",
-    "title": "Lab 10",
-    "section": "3.4 Equidistance boundary from Mexico and Canada",
-    "text": "3.4 Equidistance boundary from Mexico and Canada"
-  },
-  {
-    "objectID": "index.html#quantifing-border-zone",
-    "href": "index.html#quantifing-border-zone",
-    "title": "Lab 10",
-    "section": "4.1 Quantifing Border Zone",
-    "text": "4.1 Quantifing Border Zone"
-  },
-  {
-    "objectID": "index.html#mapping-border-zone",
-    "href": "index.html#mapping-border-zone",
-    "title": "Lab 10",
-    "section": "4.2 Mapping Border Zone",
-    "text": "4.2 Mapping Border Zone"
-  },
-  {
-    "objectID": "index.html#instead-of-labeling-the-10-most-populous-cites-label-the-most-populous-city-in-each-state-within-the-danger-zone.",
-    "href": "index.html#instead-of-labeling-the-10-most-populous-cites-label-the-most-populous-city-in-each-state-within-the-danger-zone.",
-    "title": "Lab 10",
-    "section": "4.3 Instead of labeling the 10 most populous cites, label the most populous city in each state within the Danger Zone.",
-    "text": "4.3 Instead of labeling the 10 most populous cites, label the most populous city in each state within the Danger Zone."
+    "text": "3.3 City Distance from Nearest State\n\nlibrary(viridis)\n\nLoading required package: viridisLite\n\nlibrary(sf)\ncities_with_state &lt;- st_join(cities_proj, conus_states_eqdc, join = st_within)\n# Get the 5 cities farthest from their own state borders\ntop5_state_cities &lt;- cities_with_state %&gt;%\n  arrange(desc(dist_to_state_km)) %&gt;%\n  slice_head(n = 5)\n\n# Plot the map\nggplot() +\n  geom_sf(data = conus_states_eqdc, fill = NA, color = \"black\", size = 0.3) +\n  geom_sf(data = cities_with_state, aes(color = dist_to_state_km), size = 0.5) +\n  scale_color_viridis(name = \"Distance to State Border (km)\", option = \"viridis\") +\n  geom_sf(data = top5_state_cities, color = \"blue\", size = 2) +\n  geom_label_repel(data = top5_state_cities, \n                   aes(label = name, geometry = geometry), \n                   stat = \"sf_coordinates\",\n                   min.segment.length = 0) +\n  theme_minimal() +\n  labs(title = \"Distance of CONUS Cities from Their Own State Borders\")\n\nWarning: Removed 5 rows containing missing values or values outside the scale range\n(`geom_label_repel()`)."
   }
 ]

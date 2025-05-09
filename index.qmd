@@ -12,11 +12,6 @@ execute:
 library(tidyverse)
 library(sf)
 library(units)
-
-# Data
-library(AOI)
-
-# Visualization
 library(gghighlight)
 library(ggrepel)
 library(knitr)
@@ -32,6 +27,7 @@ eqdc <- '+proj=eqdc +lat_0=40 +lon_0=-96 +lat_1=20 +lat_2=60 +x_0=0 +y_0=0 +datu
 ## 1.2 Get USA Boundaries
 ```{r}
 remotes::install_github("mikejohnson51/AOI")
+library(AOI)
 conus_states <- aoi_get(state = 'conus')
 conus_states_eqdc <- st_transform(conus_states, crs = eqdc)
 ```
@@ -148,6 +144,7 @@ top5_cities_mexico_flex <- flextable(top5_cities_mexico) %>%
 top5_cities_mexico_flex
 ```
 **Note: I believe that the distance is in the correct units. I'm not sure why there is an [m] next to the distance values. **
+
 ## 2.4 Distance to Canada (km)
 ```{r}
 # 1. Isolate Canada from the country objects
@@ -180,12 +177,98 @@ top5_cities_canada_flex
 ```
 
 # Question 3
-## 3.1 Data
-## 3.2 City Distance from the Border
-## 3.3 City Distance from Nearest State
-## 3.4 Equidistance boundary from Mexico and Canada
-# Question 4
-## 4.1 Quantifing Border Zone
-## 4.2 Mapping Border Zone
-## 4.3 Instead of labeling the 10 most populous cites, label the most populous city in each state within the Danger Zone.
 
+## 3.1 Data
+```{r}
+library(ggplot2)
+library(ggrepel)
+library(dplyr)
+
+# Filter to 3 continents of interest (e.g., North America, South America, Europe)
+continents <- countries_proj %>%
+  filter(continent %in% c("North America", "South America", "Europe"))
+
+# Get top 10 cities by population
+top10_cities <- cities_conus %>%
+  arrange(desc(population)) %>%
+  slice_head(n = 10)
+
+# Plot
+ggplot() +
+  geom_sf(data = continents, fill = "gray95", color = "gray70", lty = "dashed", size = 0.3) +
+  geom_sf(data = conus_states_eqdc, fill = NA, color = "black", size = 0.4) +
+  geom_sf(data = st_union(conus_states_eqdc), fill = NA, color = "red", size = 0.6, lty = "solid") +
+  geom_sf(data = top10_cities, aes(size = population), color = "blue") +
+  ggrepel::geom_label_repel(data = top10_cities,
+                            aes(geometry = geometry, label = city),
+                            stat = "sf_coordinates",
+                            size = 3,
+                            min.segment.length = 0) +
+  theme_minimal() +
+  labs(title = "Top 10 Largest U.S. Cities and Geographic Context",
+       subtitle = "Includes 3 Continents, CONUS Outline, and State Boundaries") +
+  theme(legend.position = "none")
+
+```
+
+## 3.2 City Distance from the Border
+```{r}
+# Reattach geometry to top5_cities
+top5_cities_sf <- cities_conus %>%
+  semi_join(top5_cities, by = c("city", "state_name.x", "dist_to_us_border_km"))
+
+```
+
+```{r}
+library(ggplot2)
+library(ggrepel)
+
+ggplot() +
+  # State boundaries
+  geom_sf(data = conus_states_eqdc, fill = NA, color = "gray30", size = 0.3) +
+  
+  # All cities colored by distance
+  geom_sf(data = cities_conus, aes(color = dist_to_us_border_km), size = 1) +
+  
+  # Highlight top 5 cities
+  geom_sf(data = top5_cities_sf, color = "red", size = 2) +
+  
+  # Labels for top 5 cities
+  ggrepel::geom_label_repel(
+    data = top5_cities_sf,
+    aes(label = city, geometry = geometry),
+    stat = "sf_coordinates",
+    size = 3,
+    min.segment.length = 0
+  ) +
+  
+  scale_color_viridis_c(option = "plasma", name = "Distance to Border (km)") +
+  
+  labs(
+    title = "U.S. Cities Colored by Distance from National Border",
+    subtitle = "Top 5 Farthest Cities Highlighted",
+    caption = "Data source: cities_conus"
+  ) +
+  
+  theme_minimal()
+
+```
+
+## 3.3 City Distance from Nearest State
+```{r}
+# 5 farthest from state border
+top5_state_cities <- cities %>%
+  arrange(desc(dist_to_state_km)) %>%
+  slice_head(n = 5)
+
+ggplot() +
+  geom_sf(data = states, fill = NA, color = "black", size = 0.3) +
+  geom_sf(data = cities, aes(color = dist_to_state_km), size = 0.5) +
+  scale_color_viridis(name = "Distance to State Border (km)", option = "viridis") +
+  geom_sf(data = top5_state_cities, color = "blue", size = 2) +
+  ggrepel::geom_label_repel(data = top5_state_cities, 
+                            aes(label = city, geometry = geometry), 
+                            stat = "sf_coordinates",
+                            min.segment.length = 0) +
+  theme_minimal() +
+  labs(title = "Distance of USA Cities from Nearest State Border")
