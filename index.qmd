@@ -23,16 +23,19 @@ library(knitr)
 ```
 
 # Question 1
+
 ## 1.1 Define a Projection
 ```{r}
 eqdc <- '+proj=eqdc +lat_0=40 +lon_0=-96 +lat_1=20 +lat_2=60 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs'
 ```
+
 ## 1.2 Get USA Boundaries
 ```{r}
 remotes::install_github("mikejohnson51/AOI")
 conus_states <- aoi_get(state = 'conus')
 conus_states_eqdc <- st_transform(conus_states, crs = eqdc)
 ```
+
 ## 1.3 Get country boundaries for Mexico, the United States of America, and Canada
 ```{r}
 countries <- aoi_get(country = c("USA", "MX", "CA"))
@@ -40,6 +43,7 @@ countries <- aoi_get(country = c("USA", "MX", "CA"))
 # Reproject to Equidistant Conic
 countries_proj <- st_transform(countries, crs = eqdc)
 ```
+
 ## 1.4 Get city locations from the CSV file
 ```{r}
 readr::read_csv("data/uscities.csv")
@@ -61,10 +65,120 @@ cities_conus <- st_join(cities_proj, conus_states_eqdc, join = st_within, left =
 ```
 
 # Question 2
+
 ## 2.1 Distance to USA Border (coastline or national) (km)
+```{r}
+library(flextable)
+
+usa_outline <- st_union(conus_states_eqdc)
+
+usa_border <- st_cast(usa_outline, "MULTILINESTRING")
+
+cities_conus$dist_to_us_border_km <- as.numeric(st_distance(cities_conus, usa_border)) / 1000
+
+top5_cities <- cities_conus %>%
+  arrange(desc(dist_to_us_border_km)) %>%
+  slice(1:5) %>%
+  select(city, state_name.x, dist_to_us_border_km) %>%
+  st_drop_geometry()
+
+top5_cities_flex <- flextable(top5_cities) %>%
+  
+  set_header_labels(
+    city = "City",
+    state_name.x = "State",
+    dist_to_us_border_km = "Distance to Border (km)"
+  ) %>%
+  add_header_row(values = "Top 5 Farthest Cities from USA Border", colwidths = 3)
+
+top5_cities_flex
+```
+
 ## 2.2 Distance to States (km)
+```{r}
+states_lines <- st_cast(conus_states_eqdc, "MULTILINESTRING")
+
+cities_dist_to_state_km <- apply(st_distance(cities_proj, states_lines), 1, min) / 1000
+
+cities_proj$dist_to_state_km <- cities_dist_to_state_km
+
+top5_cities_state <- cities_proj %>%
+  arrange(desc(dist_to_state_km)) %>%
+  select(city, state_name, dist_to_state_km) %>%
+  head(5) %>%
+  st_drop_geometry() 
+
+top5_cities_state_flex <- flextable(top5_cities_state) %>%
+  set_header_labels(
+    city = "City",
+    state_name = "State",
+    dist_to_state_km = "Distance to State Border (km)"
+  ) %>%
+  add_header_row(values = "Top 5 Farthest Cities from State Border", colwidths = 3)
+
+top5_cities_state_flex
+```
+
 ## 2.3 Distance to Mexico (km)
+```{r}
+mexico <- countries_proj %>%
+  filter(sovereignt == "Mexico")
+
+mexico_proj <- st_transform(mexico, st_crs(cities_proj))
+
+cities_proj$dist_to_mexico_km <- st_distance(cities_proj, mexico_proj) / 1000
+
+top5_cities_mexico <- cities_proj %>%
+  select(-city_ascii, -state_id, -county_fips, -county_name, -population, 
+         -density, -source, -military, -incorporated, -timezone, -ranking, 
+         -zips, -id, -dist_to_state_km) %>%
+  arrange(desc(dist_to_mexico_km)) %>%
+  head(5) %>%
+  st_drop_geometry()
+
+top5_cities_mexico_flex <- flextable(top5_cities_mexico) %>%
+  set_header_labels(
+    city = "City",
+    state_name = "State",
+    dist_to_mexico_km = "Distance to Mexico (km)"
+  ) %>%
+  add_header_row(values = "Top 5 Farthest Cities from Mexico", colwidths = 3)
+
+
+top5_cities_mexico_flex
+```
+**Note: I believe that the distance is in the correct units. I'm not sure why there is an [m] next to the distance values. **
 ## 2.4 Distance to Canada (km)
+```{r}
+# 1. Isolate Canada from the country objects
+canada_proj <- countries_proj %>%
+  filter(sovereignt == "Canada")
+
+# 2. Calculate the distance from each city to the Canadian border (in kilometers)
+cities_proj$dist_to_canada_km <- as.numeric(st_distance(cities_proj, canada_proj)) / 1000
+
+# 3. Create a table for the five cities farthest from the Canadian border
+top5_cities_canada <- cities_proj %>%
+  select(-city_ascii, -state_id, -county_fips, -county_name, -population, 
+         -density, -source, -military, -incorporated, -timezone, -ranking, 
+         -zips, -id, -dist_to_state_km, -dist_to_mexico_km) %>%
+  arrange(desc(dist_to_canada_km)) %>%
+  head(5) %>%
+  st_drop_geometry()  # Remove the geometry column for display in the table
+
+# 4. Create the flextable with only the desired columns
+top5_cities_canada_flex <- flextable(top5_cities_canada) %>%
+  set_header_labels(
+    name = "City",
+    state_name = "State",
+    dist_to_canada_km = "Distance to Canada (km)"
+  )
+
+# Display the flextable
+top5_cities_canada_flex
+
+```
+
 # Question 3
 ## 3.1 Data
 ## 3.2 City Distance from the Border

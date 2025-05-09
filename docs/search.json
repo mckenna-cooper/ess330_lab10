@@ -46,28 +46,21 @@
     "href": "index.html#distance-to-usa-border-coastline-or-national-km",
     "title": "Lab 10",
     "section": "2.1 Distance to USA Border (coastline or national) (km)",
-    "text": "2.1 Distance to USA Border (coastline or national) (km)"
+    "text": "2.1 Distance to USA Border (coastline or national) (km)\n\nlibrary(flextable)\n\nWarning: package 'flextable' was built under R version 4.4.3\n\n\n\nAttaching package: 'flextable'\n\n\nThe following object is masked from 'package:purrr':\n\n    compose\n\nusa_outline &lt;- st_union(conus_states_eqdc)\n\nusa_border &lt;- st_cast(usa_outline, \"MULTILINESTRING\")\n\ncities_conus$dist_to_us_border_km &lt;- as.numeric(st_distance(cities_conus, usa_border)) / 1000\n\ntop5_cities &lt;- cities_conus %&gt;%\n  arrange(desc(dist_to_us_border_km)) %&gt;%\n  slice(1:5) %&gt;%\n  select(city, state_name.x, dist_to_us_border_km) %&gt;%\n  st_drop_geometry()\n\ntop5_cities_flex &lt;- flextable(top5_cities) %&gt;%\n  \n  set_header_labels(\n    city = \"City\",\n    state_name.x = \"State\",\n    dist_to_us_border_km = \"Distance to Border (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from USA Border\", colwidths = 3)\n\ntop5_cities_flex\n\nTop 5 Farthest Cities from USA BorderCityStateDistance to Border (km)MinneapolisKansas1,084.275AdaKansas1,084.112BarnardKansas1,083.737ManchesterKansas1,080.210TalmageKansas1,080.049"
   },
   {
     "objectID": "index.html#distance-to-states-km",
     "href": "index.html#distance-to-states-km",
     "title": "Lab 10",
     "section": "2.2 Distance to States (km)",
-    "text": "2.2 Distance to States (km)"
+    "text": "2.2 Distance to States (km)\n\nstates_lines &lt;- st_cast(conus_states_eqdc, \"MULTILINESTRING\")\n\ncities_dist_to_state_km &lt;- apply(st_distance(cities_proj, states_lines), 1, min) / 1000\n\ncities_proj$dist_to_state_km &lt;- cities_dist_to_state_km\n\ntop5_cities_state &lt;- cities_proj %&gt;%\n  arrange(desc(dist_to_state_km)) %&gt;%\n  select(city, state_name, dist_to_state_km) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry() \n\ntop5_cities_state_flex &lt;- flextable(top5_cities_state) %&gt;%\n  set_header_labels(\n    city = \"City\",\n    state_name = \"State\",\n    dist_to_state_km = \"Distance to State Border (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from State Border\", colwidths = 3)\n\ntop5_cities_state_flex\n\nTop 5 Farthest Cities from State BorderCityStateDistance to State Border (km)Attu StationAlaska4,118.416Eareckson StationAlaska4,060.616KekahaHawaii3,762.144KaumakaniHawaii3,758.751Pakala VillageHawaii3,758.405"
   },
   {
     "objectID": "index.html#distance-to-mexico-km",
     "href": "index.html#distance-to-mexico-km",
     "title": "Lab 10",
     "section": "2.3 Distance to Mexico (km)",
-    "text": "2.3 Distance to Mexico (km)"
-  },
-  {
-    "objectID": "index.html#distance-to-canada-km",
-    "href": "index.html#distance-to-canada-km",
-    "title": "Lab 10",
-    "section": "2.4 Distance to Canada (km)",
-    "text": "2.4 Distance to Canada (km)"
+    "text": "2.3 Distance to Mexico (km)\n\nmexico &lt;- countries_proj %&gt;%\n  filter(sovereignt == \"Mexico\")\n\nmexico_proj &lt;- st_transform(mexico, st_crs(cities_proj))\n\ncities_proj$dist_to_mexico_km &lt;- st_distance(cities_proj, mexico_proj) / 1000\n\ntop5_cities_mexico &lt;- cities_proj %&gt;%\n  select(-city_ascii, -state_id, -county_fips, -county_name, -population, \n         -density, -source, -military, -incorporated, -timezone, -ranking, \n         -zips, -id, -dist_to_state_km) %&gt;%\n  arrange(desc(dist_to_mexico_km)) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry()\n\ntop5_cities_mexico_flex &lt;- flextable(top5_cities_mexico) %&gt;%\n  set_header_labels(\n    city = \"City\",\n    state_name = \"State\",\n    dist_to_mexico_km = \"Distance to Mexico (km)\"\n  ) %&gt;%\n  add_header_row(values = \"Top 5 Farthest Cities from Mexico\", colwidths = 3)\n\n\ntop5_cities_mexico_flex\n\nTop 5 Farthest Cities from MexicoCityStateDistance to Mexico (km)Attu StationAlaska5,640.179 [m]Eareckson StationAlaska5,576.325 [m]Point HopeAlaska5,061.411 [m]GambellAlaska5,026.623 [m]Point LayAlaska5,016.127 [m]\n\n\nNote: I believe that the distance is in the correct units. I’m not sure why there is an [m] next to the distance values.  ## 2.4 Distance to Canada (km)\n\n# 1. Isolate Canada from the country objects\ncanada_proj &lt;- countries_proj %&gt;%\n  filter(sovereignt == \"Canada\")\n\n# 2. Calculate the distance from each city to the Canadian border (in kilometers)\ncities_proj$dist_to_canada_km &lt;- as.numeric(st_distance(cities_proj, canada_proj)) / 1000\n\n# 3. Create a table for the five cities farthest from the Canadian border\ntop5_cities_canada &lt;- cities_proj %&gt;%\n  select(-city_ascii, -state_id, -county_fips, -county_name, -population, \n         -density, -source, -military, -incorporated, -timezone, -ranking, \n         -zips, -id, -dist_to_state_km, -dist_to_mexico_km) %&gt;%\n  arrange(desc(dist_to_canada_km)) %&gt;%\n  head(5) %&gt;%\n  st_drop_geometry()  # Remove the geometry column for display in the table\n\n# 4. Create the flextable with only the desired columns\ntop5_cities_canada_flex &lt;- flextable(top5_cities_canada) %&gt;%\n  set_header_labels(\n    name = \"City\",\n    state_name = \"State\",\n    dist_to_canada_km = \"Distance to Canada (km)\"\n  )\n\n# Display the flextable\ntop5_cities_canada_flex\n\ncityStateDistance to Canada (km)Hawaiian Ocean ViewHawaii4,151.650Discovery HarbourHawaii4,149.978WaiohinuHawaii4,146.501NaalehuHawaii4,144.805PahalaHawaii4,127.362"
   },
   {
     "objectID": "index.html#data",
