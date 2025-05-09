@@ -256,14 +256,17 @@ ggplot() +
 
 ## 3.3 City Distance from Nearest State
 ```{r}
+library(dplyr)
+library(viridis)
+
 # 5 farthest from state border
-top5_state_cities <- cities %>%
+top5_state_cities <- cities_proj %>%
   arrange(desc(dist_to_state_km)) %>%
   slice_head(n = 5)
 
 ggplot() +
-  geom_sf(data = states, fill = NA, color = "black", size = 0.3) +
-  geom_sf(data = cities, aes(color = dist_to_state_km), size = 0.5) +
+  geom_sf(data = conus_states_eqdc, fill = NA, color = "black", size = 0.3) +
+  geom_sf(data = cities_proj, aes(color = dist_to_state_km), size = 0.5) +
   scale_color_viridis(name = "Distance to State Border (km)", option = "viridis") +
   geom_sf(data = top5_state_cities, color = "blue", size = 2) +
   ggrepel::geom_label_repel(data = top5_state_cities, 
@@ -272,3 +275,7 @@ ggplot() +
                             min.segment.length = 0) +
   theme_minimal() +
   labs(title = "Distance of USA Cities from Nearest State Border")
+
+```
+
+
